@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>崩坏：星穹铁道 · Story Kit</title>
+<script>(function(){try{var t=localStorage.getItem('storykit-theme');if(t!=='light'&&t!=='dark'){t=(matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<link rel="stylesheet" href="../_shared/viewer.css">
+</head>
+<body>
+<div class="shell" id="shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main">
+    <div class="mobile-bar">
+      <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+      <span class="mobile-title">星穹铁道 · STORY KIT</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="切换亮暗">☾</button>
+      <button class="mobile-search" data-go="#/search" aria-label="搜索">⌕</button>
+    </div>
+    <div class="topbar">
+      <div class="crumb" id="crumb"></div>
+      <div class="topbar-spacer"></div>
+      <button class="theme-toggle" data-theme-toggle aria-label="切换亮暗">☾</button>
+      <button class="search-trigger" data-go="#/search">
+        <span>搜索剧情 / 角色 / 台词</span>
+        <kbd>/</kbd>
+      </button>
+    </div>
+    <main class="content" id="app"></main>
+  </div>
+</div>
+<script src="data.js"></script>
+<script src="../_shared/viewer.js"></script>
+</body>
+</html>
