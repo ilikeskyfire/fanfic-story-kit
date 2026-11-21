@@ -583,7 +583,38 @@
 
   /* ---------------- events ---------------- */
 
+  /* ---------------- theme toggle ---------------- */
+  var THEME_KEY = "storykit-theme";
+  function getStoredTheme() {
+    try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
+  }
+  function resolveTheme() {
+    var t = getStoredTheme();
+    if (t === "light" || t === "dark") return t;
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  }
+  function applyTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    var light = t === "light";
+    var btns = document.querySelectorAll("[data-theme-toggle]");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].textContent = light ? "\u263e" : "\u2600";
+      btns[i].setAttribute("aria-label", light ? "\u5207\u6362\u5230\u6697\u8272" : "\u5207\u6362\u5230\u4eae\u8272");
+      btns[i].title = light ? "\u5207\u6362\u5230\u6697\u8272" : "\u5207\u6362\u5230\u4eae\u8272";
+    }
+  }
+  function toggleTheme() {
+    var next = resolveTheme() === "light" ? "dark" : "light";
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+    applyTheme(next);
+  }
+  applyTheme(resolveTheme());
+
   document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-theme-toggle]")) {
+      toggleTheme();
+      return;
+    }
     var scrollEl = e.target.closest("[data-scroll]");
     if (scrollEl) {
       var target = document.getElementById(scrollEl.getAttribute("data-scroll"));

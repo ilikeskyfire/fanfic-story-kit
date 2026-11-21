@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fanfic Story Kit · 同人剧情参考库</title>
+<script>(function(){try{var t=localStorage.getItem('storykit-theme');if(t!=='light'&&t!=='dark'){t=(matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <style>
   :root {
     --bg:#0b0b0c; --panel:#151518; --line:#2b2b31; --text:#eceae5; --muted:#96938c; --dim:#6d6a64;
-    --yellow:#ffd60a; --red:#ff3b30;
+    --yellow:#ffd60a; --red:#ff3b30; --accent:#ffd60a;
     --font:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
     --mono:"JetBrains Mono",Consolas,monospace;
   }
@@ -51,9 +52,44 @@
   .soon b { display:block; color:var(--muted); font-size:14px; margin-bottom:4px; }
   .foot { margin-top:44px; padding-top:18px; border-top:1px solid var(--line); font-size:11px; color:var(--dim); display:flex; flex-wrap:wrap; gap:8px 20px; justify-content:space-between; }
   .foot a { color:var(--muted); border-bottom:1px dotted var(--line); }
+  .theme-toggle{position:fixed;top:22px;right:24px;z-index:50;width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:3px;cursor:pointer;font-size:16px;transition:.15s;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  :root[data-theme="light"]{--bg:#f6f4ee;--panel:#fff;--line:#ddd7c7;--text:#1d1b16;--muted:#5c574c;--dim:#8a8475;--accent:#8a5a00;}
+  :root[data-theme="light"] body{background-image:radial-gradient(900px 520px at 75% -10%,rgba(255,180,0,.09),transparent 60%),radial-gradient(700px 420px at 0% 110%,rgba(69,200,241,.07),transparent 60%);}
+  :root[data-theme="light"] h1 em{color:var(--accent);}
+  :root[data-theme="light"] .kicker{color:var(--accent);}
+  :root[data-theme="light"] .kicker::before{background:var(--accent);}
+  :root[data-theme="light"] .tag{background:#fff;}
+  :root[data-theme="light"] .work:hover{border-color:var(--accent);box-shadow:6px 6px 0 rgba(138,90,0,.12);}
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" aria-label="切换亮暗">☾</button>
+<script>
+(function(){
+  var KEY='storykit-theme';
+  var btn=document.getElementById('themeToggle');
+  function resolve(){
+    var t=null; try{t=localStorage.getItem(KEY);}catch(e){}
+    if(t==='light'||t==='dark') return t;
+    return (window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';
+  }
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    if(!btn) return;
+    var light=t==='light';
+    btn.textContent=light?'\u263e':'\u2600';
+    var label=light?'\u5207\u6362\u5230\u6697\u8272':'\u5207\u6362\u5230\u4eae\u8272';
+    btn.setAttribute('aria-label',label); btn.title=label;
+  }
+  apply(resolve());
+  btn.addEventListener('click',function(){
+    var next=resolve()==='light'?'dark':'light';
+    try{localStorage.setItem(KEY,next);}catch(e){}
+    apply(next);
+  });
+})();
+</script>
 <div class="wrap">
   <div class="kicker">Fanfic Story Kit / Archive</div>
   <h1>同人写作的<br><em>剧情参考库</em></h1>
